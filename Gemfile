@@ -34,6 +34,7 @@ group :development, :test do
   gem 'irbtools'
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'rack-cors'
 end
 
 group :development do
