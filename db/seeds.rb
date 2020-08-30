@@ -17,7 +17,7 @@ CSV.foreach(Rails.root.join('db/data/items.csv'), headers: true) do |row|
   Item.create({
     name: row[:name],
     description: row[:description],
-    unit_price: row[:unit_price].fdiv(100),
+    unit_price: row[:unit_price],
     merchant_id: row[:merchant_id]
     })
 end
