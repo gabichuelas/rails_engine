@@ -1,4 +1,3 @@
 class Merchant < ApplicationRecord
-  validate_presence_of :name
-  
+  validates_presence_of :name
 end
