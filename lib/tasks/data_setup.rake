@@ -1,9 +1,17 @@
 namespace :data_setup do
+
+  desc "run them all"
+  task all: :environment do
+    # WOOO SRP AND ENCAPSULATION!
+    Rake::Task['data_setup:clear_tables'].execute
+    Rake::Task['data_setup:reset_keys'].execute
+    Rake::Task['data_setup:csv_seed'].execute
+  end
+
   desc "clear dev db to prevent data duplication"
   task clear_tables: :environment do
-    # delete all data in tables
-    # Item.destroy_all
-    # do in order!
+    Item.destroy_all
+    Merchant.destroy_all
   end
 
   desc "reset the primary key sequence for each table you import so that new records will receive the next valid primary key"
@@ -15,13 +23,6 @@ namespace :data_setup do
 
   desc "seed your db with the CSV data"
   task csv_seed: :environment do
-    # manually run seeds.rb file?
-    # use backticks to run ruby script
-    `ruby seeds.rb`
-  end
-
-  desc "convert all prices before storing from cents to dollars"
-  task price_convert: :environment do
-    # this should probably be code in the model for each item that has prices?
+    `rails db:seed`
   end
 end

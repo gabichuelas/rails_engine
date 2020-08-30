@@ -8,19 +8,12 @@
 require 'csv'
 
 CSV.foreach(Rails.root.join('db/data/merchants.csv'), headers: true) do |row|
-  Merchant.create({
-    name: row[:name]
-    })
+  Merchant.create(row.to_h)
 end
 
-CSV.foreach(Rails.root.join('db/data/items.csv'), headers: true) do |row|
-  Item.create({
-    name: row[:name],
-    description: row[:description],
-    unit_price: row[:unit_price],
-    merchant_id: row[:merchant_id]
-    })
-end
+# CSV.foreach(Rails.root.join('db/data/items.csv'), headers: true) do |row|
+#   Item.create(row.to_h)
+# end
 
 #
 # CSV.foreach(Rails.root.join('db/data/customers.csv'), headers: true) do |row|
