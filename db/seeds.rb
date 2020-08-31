@@ -16,22 +16,6 @@ end
 spawn('merchants.csv', Merchant)
 spawn('items.csv', Item)
 spawn('customers.csv', Customer)
-
-#
-# CSV.foreach(Rails.root.join('db/data/invoices.csv'), headers: true) do |row|
-#   Invoice.create({
-#     # invoice attributes here
-#     })
-# end
-#
-# CSV.foreach(Rails.root.join('db/data/invoice_items.csv'), headers: true) do |row|
-#   InvoiceItem.create({
-#     # invoice_item attributes here
-#     })
-# end
-#
-# CSV.foreach(Rails.root.join('db/data/transactions.csv'), headers: true) do |row|
-#   Transaction.create({
-#     # transaction attributes here
-#     })
-# end
+spawn('invoices.csv', Invoice)
+spawn('invoice_items.csv', InvoiceItem)
+spawn('transactions.csv', Transaction)
