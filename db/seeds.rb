@@ -7,35 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'csv'
 
-CSV.foreach(Rails.root.join('db/data/merchants.csv'), headers: true) do |row|
-  Merchant.create(row.to_h)
+def spawn(filename, model)
+  CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
+    # require "pry"; binding.pry
+    model.create(row.to_h)
+  end
 end
 
-# CSV.foreach(Rails.root.join('db/data/items.csv'), headers: true) do |row|
-#   Item.create(row.to_h)
-# end
+puts "Adding merchants to db..."
+spawn('merchants.csv', Merchant)
 
-#
-# CSV.foreach(Rails.root.join('db/data/customers.csv'), headers: true) do |row|
-#   Customer.create({
-#     # customer attributes here
-#     })
-# end
-#
-# CSV.foreach(Rails.root.join('db/data/invoices.csv'), headers: true) do |row|
-#   Invoice.create({
-#     # invoice attributes here
-#     })
-# end
-#
-# CSV.foreach(Rails.root.join('db/data/invoice_items.csv'), headers: true) do |row|
-#   InvoiceItem.create({
-#     # invoice_item attributes here
-#     })
-# end
-#
-# CSV.foreach(Rails.root.join('db/data/transactions.csv'), headers: true) do |row|
-#   Transaction.create({
-#     # transaction attributes here
-#     })
-# end
+puts "Adding items to db..."
+spawn('items.csv', Item)
+
+puts "Adding customers to db..."
+spawn('customers.csv', Customer)
+
+puts "Adding invoices to db..."
+spawn('invoices.csv', Invoice)
+
+puts "Adding invoice_items to db..."
+spawn('invoice_items.csv', InvoiceItem)
+
+puts "Adding payments to db..."
+spawn('transactions.csv', Payment)
+
+puts "Data entry complete!"
