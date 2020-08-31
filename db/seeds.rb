@@ -7,20 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'csv'
 
-CSV.foreach(Rails.root.join('db/data/merchants.csv'), headers: true) do |row|
-  Merchant.create(row.to_h)
+def spawn(filename, model)
+  CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
+    model.create(row.to_h)
+  end
 end
 
-# CSV.foreach(Rails.root.join('db/data/items.csv'), headers: true) do |row|
-#   Item.create(row.to_h)
-# end
+spawn('merchants.csv', Merchant)
+spawn('items.csv', Item)
+spawn('customers.csv', Customer)
 
-#
-# CSV.foreach(Rails.root.join('db/data/customers.csv'), headers: true) do |row|
-#   Customer.create({
-#     # customer attributes here
-#     })
-# end
 #
 # CSV.foreach(Rails.root.join('db/data/invoices.csv'), headers: true) do |row|
 #   Invoice.create({
