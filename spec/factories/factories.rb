@@ -27,3 +27,12 @@ FactoryBot.define do
     status { "shipped" }
   end
 end
+
+FactoryBot.define do
+  factory :invoice_item do
+    item
+    invoice
+    quantity { 5 }
+    unit_price { 70045}
+  end
+end
