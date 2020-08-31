@@ -8,7 +8,10 @@ RSpec.describe "Api::V1::Merchants", type: :request do
       create_list(:merchant, 5)
       get "/api/v1/merchants/index"
 
+      merchants = JSON.parse(response.body, symbolize_names: true)
+      
       expect(response).to have_http_status(:success)
+      expect(orders[:data].count).to eq(5)
     end
   end
 
