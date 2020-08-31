@@ -9,13 +9,27 @@ require 'csv'
 
 def spawn(filename, model)
   CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
+    # require "pry"; binding.pry
     model.create(row.to_h)
   end
 end
 
+puts "Adding merchants to db..."
 spawn('merchants.csv', Merchant)
+
+puts "Adding items to db..."
 spawn('items.csv', Item)
+
+puts "Adding customers to db..."
 spawn('customers.csv', Customer)
+
+puts "Adding invoices to db..."
 spawn('invoices.csv', Invoice)
+
+puts "Adding invoice_items to db..."
 spawn('invoice_items.csv', InvoiceItem)
-spawn('transactions.csv', Transaction)
+
+puts "Adding payments to db..."
+spawn('transactions.csv', Payment)
+
+puts "Data entry complete!"

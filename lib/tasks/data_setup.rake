@@ -10,8 +10,12 @@ namespace :data_setup do
 
   desc "clear dev db to prevent data duplication"
   task clear_tables: :environment do
+    InvoiceItem.destroy_all
     Item.destroy_all
+    Invoice.destroy_all
     Merchant.destroy_all
+    Customer.destroy_all
+    Payment.destroy_all
   end
 
   desc "reset the primary key sequence for each table you import so that new records will receive the next valid primary key"

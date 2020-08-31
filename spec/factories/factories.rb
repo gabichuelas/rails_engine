@@ -36,3 +36,11 @@ FactoryBot.define do
     unit_price { 70045}
   end
 end
+
+FactoryBot.define do
+  factory :payment do
+    invoice
+    credit_card_number { "4654405418249632" }
+    result { "success" }
+  end
+end
