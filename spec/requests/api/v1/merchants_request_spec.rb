@@ -66,7 +66,6 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     post api_v1_merchants_path, params: attributes, headers: @headers
 
     merchant = Merchant.last
-    json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(:success)
     expect(Merchant.all.count).to eq(7)
