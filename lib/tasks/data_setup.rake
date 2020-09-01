@@ -4,8 +4,8 @@ namespace :data_setup do
   task all: :environment do
     # WOOO SRP AND ENCAPSULATION!
     Rake::Task['data_setup:clear_tables'].execute
-    Rake::Task['data_setup:reset_keys'].execute
     Rake::Task['data_setup:csv_seed'].execute
+    Rake::Task['data_setup:reset_keys'].execute
   end
 
   desc "clear dev db to prevent data duplication"
