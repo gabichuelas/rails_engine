@@ -21,7 +21,12 @@ namespace :data_setup do
 
     def spawn(filename, model)
       CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
-        model.create!(row.to_h)
+        object = model.create!(row.to_h)
+        if object.unit_price
+          object.unit_price = object.unit_price.fdiv(100)
+          object.save
+        else
+        end 
       end
     end
 
