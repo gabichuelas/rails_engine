@@ -19,29 +19,32 @@ RSpec.describe "Api::V1::Items", type: :request do
     expect(json[:data][0][:attributes]).to have_key(:merchant_id)
   end
 
-  xit 'GET /api/v1/<resource>/:id' do
+  it 'GET /api/v1/items/:id' do
 
-    get api_v1_merchant_path(@merchant.id)
+    get api_v1_item_path(@item.id)
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(:success)
     expect(json[:data]).to have_key(:id)
     expect(json[:data][:attributes]).to have_key(:name)
+    expect(json[:data][:attributes]).to have_key(:description)
+    expect(json[:data][:attributes]).to have_key(:unit_price)
+    expect(json[:data][:attributes]).to have_key(:merchant_id)
   end
 
-  xit 'DELETE /api/v1/<resource>/:id' do
+  it 'DELETE /api/v1/items/:id' do
 
-    merchant_id = create(:merchant).id
-    get api_v1_merchant_path(merchant_id)
+    item_id = create(:item).id
+    get api_v1_item_path(item_id)
     json1 = JSON.parse(response.body, symbolize_names: true)
 
-    expect(json1[:data][:id].to_i).to eq(merchant_id)
+    expect(json1[:data][:id].to_i).to eq(item_id)
 
-    delete api_v1_merchant_path(merchant_id)
+    delete api_v1_item_path(item_id)
 
     expect(response.status).to eq(204)
     expect(response.body).to eq("")
-    expect{Merchant.find(merchant_id)}.to raise_error(ActiveRecord::RecordNotFound)
+    expect{Item.find(item_id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   xit 'PATCH /api/v1/<resource>/:id' do
