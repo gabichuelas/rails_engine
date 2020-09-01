@@ -8,6 +8,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def create
+    # require "pry"; binding.pry
     render json: Merchant.create(merchant_params), status: 201
   end
 
@@ -23,6 +24,6 @@ class Api::V1::MerchantsController < ApplicationController
   private
 
   def merchant_params
-    params.require(:merchant).permit(:name)
+    params.permit(:name)
   end
 end
