@@ -62,15 +62,18 @@ RSpec.describe "Api::V1::Items", type: :request do
 
   end
 
-  xit 'CREATE /api/v1/<resource>' do
+  it 'CREATE /api/v1/items' do
 
-    attributes = JSON.generate({name: "University Cobbler"})
-    post api_v1_merchants_path, params: attributes, headers: @headers
+    merchant_id = create(:merchant).id
+    attributes = JSON.generate({name: "Mid Mod Desk", description: "This wooden desk has butterflies and copper inserts.", unit_price: 1500.50, merchant_id: merchant_id})
+    post api_v1_items_path, params: attributes, headers: @headers
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(201)
     expect(json[:data]).to have_key(:id)
-    expect(json[:data][:attributes]).to have_key(:name)
-    expect(json[:data][:attributes][:name]).to eq("University Cobbler")
+    expect(json[:data][:attributes][:name]).to eq("Mid Mod Desk")
+    expect(json[:data][:attributes][:description]).to eq("This wooden desk has butterflies and copper inserts.")
+    expect(json[:data][:attributes][:unit_price]).to eq(1500.50)
+    expect(json[:data][:attributes][:merchant_id]).to eq(merchant_id)
   end
 end

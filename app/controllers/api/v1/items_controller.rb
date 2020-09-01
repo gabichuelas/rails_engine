@@ -6,12 +6,12 @@ class Api::V1::ItemsController < ApplicationController
   def show
     render json: ItemSerializer.new(Item.find(params[:id]))
   end
-#
-#   def create
-#     merchant = Merchant.create(merchant_params)
-#     render json: MerchantSerializer.new(merchant), status: 201
-#   end
-#
+
+  def create
+    item = Item.create(item_params)
+    render json: ItemSerializer.new(item), status: 201
+  end
+
   def update
     item = Item.find(params[:id])
     item.update(item_params)
