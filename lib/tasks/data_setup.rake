@@ -2,9 +2,8 @@ namespace :data_setup do
 
   desc "run them all"
   task all: :environment do
-    # WOOO SRP AND ENCAPSULATION!
     Rake::Task['data_setup:clear_tables'].execute
-    Rake::Task['data_setup:csv_seed'].execute
+    `rails db:seed`
     Rake::Task['data_setup:reset_keys'].execute
   end
 
@@ -23,10 +22,5 @@ namespace :data_setup do
     ActiveRecord::Base.connection.tables.each do |t|
       ActiveRecord::Base.connection.reset_pk_sequence!(t)
     end
-  end
-
-  desc "seed your db with the CSV data"
-  task csv_seed: :environment do
-    `rails db:seed`
   end
 end

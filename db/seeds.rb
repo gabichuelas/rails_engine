@@ -9,7 +9,6 @@ require 'csv'
 
 def spawn(filename, model)
   CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
-    # require "pry"; binding.pry
     model.create(row.to_h)
   end
 end
