@@ -49,14 +49,11 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     expect(merchant.name).to eq("Robin Dean Designs")
 
     attributes = JSON.generate({name: "New Name"})
-    # attributes = {name: "New Name"}
-
-
     patch api_v1_merchant_path(merchant.id), params: attributes, headers: @headers
+    json = JSON.parse(response.body, symbolize_names: true)
 
-    expect(response).to have_http_status(:success)
-    expect(response.status).to eq(200)
-    expect(Merchant.find(merchant.id).name).to eq("New Name")
+    expect(response).to have_http_status(200)
+    expect(json[:data][:attributes][:name]).to eq("New Name")
   end
 
   it 'CREATE /api/v1/<resource>' do
