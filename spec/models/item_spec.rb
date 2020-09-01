@@ -10,13 +10,13 @@ RSpec.describe Item do
     it { should belong_to :merchant }
   end
 
-  describe 'before_create methods' do
-    it 'to_dollars' do
-
-      item = create(:item)
-      item.update(unit_price: 75107)
-
-      expect(item.unit_price).to eq(751.07)
-    end
-  end
+  # describe 'before_create methods' do
+  #   it 'to_dollars' do
+  #
+  #     item = create(:item)
+  #     item.update(unit_price: 75107)
+  #
+  #     expect(item.unit_price).to eq(751.07)
+  #   end
+  # end
 end
