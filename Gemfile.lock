@@ -96,6 +96,8 @@ GEM
     fancy_irb (1.2.1)
       paint (>= 0.9, < 3.0)
       unicode-display_width (~> 1.1)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     ffi (1.13.1)
     g (1.7.2)
     globalid (0.4.2)
@@ -257,6 +259,7 @@ DEPENDENCIES
   byebug
   capybara
   factory_bot_rails
+  fast_jsonapi
   irbtools
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
