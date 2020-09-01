@@ -1,9 +1,11 @@
+require 'csv'
+
 namespace :data_setup do
 
   desc "run them all"
   task all: :environment do
     Rake::Task['data_setup:clear_tables'].execute
-    Rake::Task['db:seed'].execute
+    Rake::Task['data_setup:csv_seed'].execute
     Rake::Task['data_setup:reset_keys'].execute
   end
 
@@ -12,6 +14,29 @@ namespace :data_setup do
     Rake::Task['db:drop'].execute
     Rake::Task['db:create'].execute
     Rake::Task['db:migrate'].execute
+  end
+
+  desc "seed dev db with csv data"
+  task csv_seed: :environment do
+
+    def spawn(filename, model)
+      CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
+        model.create!(row.to_h)
+      end
+    end
+
+    csv_data = {
+      Merchant => 'merchants.csv',
+      Item => 'items.csv',
+      Customer => 'customers.csv',
+      Invoice => 'invoices.csv',
+      InvoiceItem => 'invoice_items.csv',
+      Payment => 'transactions.csv'
+    }
+
+    csv_data.each do |model, csv_file|
+      spawn(csv_file, model)
+    end
   end
 
   desc "reset the primary key sequence for each table you import so that new records will receive the next valid primary key"
