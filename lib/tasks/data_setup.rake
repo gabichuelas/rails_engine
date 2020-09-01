@@ -26,7 +26,7 @@ namespace :data_setup do
           object.unit_price = object.unit_price.fdiv(100)
           object.save
         else
-        end 
+        end
       end
     end
 
@@ -40,6 +40,7 @@ namespace :data_setup do
     }
 
     csv_data.each do |model, csv_file|
+      puts "Injecting #{model}s into dev db..."
       spawn(csv_file, model)
     end
   end
