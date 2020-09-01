@@ -33,14 +33,12 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     json1 = JSON.parse(response.body, symbolize_names: true)
 
     expect(json1[:data][:id].to_i).to eq(merchant_id)
-    expect(Merchant.all.count).to eq(7)
 
     delete api_v1_merchant_path(merchant_id)
 
     expect(response.status).to eq(204)
-    expect(Merchant.all.count).to eq(6)
+    expect(response.body).to eq("")
     expect{Merchant.find(merchant_id)}.to raise_error(ActiveRecord::RecordNotFound)
-    # what would the response.body be for delete? ""
   end
 
   it 'PATCH /api/v1/<resource>/:id' do
