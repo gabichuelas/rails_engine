@@ -6,18 +6,18 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     it "returns http success" do
 
       create_list(:merchant, 5)
-      get "/api/v1/merchants/index"
+      get "/api/v1/merchants"
 
       merchants = JSON.parse(response.body, symbolize_names: true)
-      
+
       expect(response).to have_http_status(:success)
-      expect(orders[:data].count).to eq(5)
+      expect(merchants[:data].count).to eq(5)
     end
   end
 
   describe "GET /show" do
     xit "returns http success" do
-      get "/api/v1/merchants/show"
+      get "/api/v1/merchants/#{merchant.id}"
       expect(response).to have_http_status(:success)
     end
   end
