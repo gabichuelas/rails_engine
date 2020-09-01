@@ -47,17 +47,19 @@ RSpec.describe "Api::V1::Items", type: :request do
     expect{Item.find(item_id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  xit 'PATCH /api/v1/<resource>/:id' do
+  it 'PATCH /api/v1/items/:id' do
 
-    merchant = create(:merchant)
-    expect(merchant.name).to eq("Robin Dean Designs")
+    item = create(:item)
+    expect(item.name).to eq("Whimsical Nightstand")
 
-    attributes = JSON.generate({name: "New Name"})
-    patch api_v1_merchant_path(merchant.id), params: attributes, headers: @headers
+    attributes = JSON.generate({name: "New Name", unit_price: 805.00})
+    patch api_v1_item_path(item.id), params: attributes, headers: @headers
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(200)
     expect(json[:data][:attributes][:name]).to eq("New Name")
+    expect(json[:data][:attributes][:unit_price]).to eq(805.00)
+
   end
 
   xit 'CREATE /api/v1/<resource>' do
