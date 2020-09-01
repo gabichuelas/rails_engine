@@ -8,7 +8,8 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def create
-    render json: Merchant.create(merchant_params)
+    # require "pry"; binding.pry
+    render json: Merchant.create(merchant_params), status: 201
   end
 
   def update
@@ -17,12 +18,12 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def destroy
-    render json: Merchant.delete(params[:id])
+    render json: Merchant.delete(params[:id]), status: 204
   end
 
   private
 
   def merchant_params
-    params.permit(:name)
+    params.require(:merchant).permit(:name)
   end
 end

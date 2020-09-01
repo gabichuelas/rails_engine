@@ -2,6 +2,7 @@ RSpec.describe "Api::V1::Merchants", type: :request do
   before :each do
     @merchants = create_list(:merchant, 5)
     @merchant = create(:merchant)
+    @headers = { "CONTENT_TYPE" => "application/json" }
   end
 
   it 'GET /api/v1/<resource>' do
@@ -35,12 +36,11 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     expect(Merchant.all.count).to eq(7)
 
     delete api_v1_merchant_path(merchant_id)
-    json2 = JSON.parse(response.body, symbolize_names: true)
 
-    # expect(response.status).to eq(204)
+    expect(response.status).to eq(204)
     expect(Merchant.all.count).to eq(6)
     expect{Merchant.find(merchant_id)}.to raise_error(ActiveRecord::RecordNotFound)
-    # what would the response.body be for delete?
+    # what would the response.body be for delete? ""
   end
 
   it 'PATCH /api/v1/<resource>/:id' do
@@ -48,13 +48,12 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     merchant = create(:merchant)
     expect(merchant.name).to eq("Robin Dean Designs")
 
-    attributes = {name: "New Name"}
-    patch api_v1_merchant_path(merchant.id, attributes)
+    attributes = JSON.generate({name: "New Name"})
 
-    json = JSON.parse(response.body, symbolize_names: true)
+    patch api_v1_merchant_path(merchant.id), params: attributes, headers: @headers
 
     expect(response).to have_http_status(:success)
-    # what kind of success code though?
+    expect(response.status).to eq(200)
     expect(Merchant.find(merchant.id).name).to eq("New Name")
   end
 
@@ -62,8 +61,10 @@ RSpec.describe "Api::V1::Merchants", type: :request do
 
     expect(Merchant.all.count).to eq(6)
 
-    attributes = {name: "University Cobbler"}
-    post api_v1_merchants_path(attributes)
+    attributes = JSON.generate({name: "University Cobbler"})
+
+    post api_v1_merchants_path, params: attributes, headers: @headers
+
     merchant = Merchant.last
     json = JSON.parse(response.body, symbolize_names: true)
 
