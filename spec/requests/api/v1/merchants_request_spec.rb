@@ -12,6 +12,8 @@ RSpec.describe "Api::V1::Merchants", type: :request do
 
       expect(response).to have_http_status(:success)
       expect(merchants[:data].count).to eq(5)
+      expect(merchants[:data][0]).to have_key(:id)
+      expect(merchants[:data][0][:attributes]).to have_key(:name)
     end
   end
 
