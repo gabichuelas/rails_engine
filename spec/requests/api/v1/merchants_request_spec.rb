@@ -37,8 +37,38 @@ RSpec.describe "Api::V1::Merchants", type: :request do
     delete api_v1_merchant_path(merchant_id)
     json2 = JSON.parse(response.body, symbolize_names: true)
 
-    expect(response).to have_http_status(:success)
+    # expect(response.status).to eq(204)
     expect(Merchant.all.count).to eq(6)
     expect{Merchant.find(merchant_id)}.to raise_error(ActiveRecord::RecordNotFound)
+    # what would the response.body be for delete?
+  end
+
+  it 'PATCH /api/v1/<resource>/:id' do
+
+    merchant = create(:merchant)
+    expect(merchant.name).to eq("Robin Dean Designs")
+
+    attributes = {name: "New Name"}
+    patch api_v1_merchant_path(merchant.id, attributes)
+
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to have_http_status(:success)
+    # what kind of success code though?
+    expect(Merchant.find(merchant.id).name).to eq("New Name")
+  end
+
+  it 'CREATE /api/v1/<resource>' do
+
+    expect(Merchant.all.count).to eq(6)
+
+    attributes = {name: "University Cobbler"}
+    post api_v1_merchants_path(attributes)
+    merchant = Merchant.last
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to have_http_status(:success)
+    expect(Merchant.all.count).to eq(7)
+    expect(merchant.name).to eq("University Cobbler")
   end
 end
