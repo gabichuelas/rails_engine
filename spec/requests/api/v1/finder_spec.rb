@@ -1,10 +1,10 @@
 RSpec.describe "Single Finders", type: :request do
   before :each do
     # "Whimsical Nightstand"
-    create(:item, updated_at: "2012-03-27 12:40:59")
+    @item1 = create(:item, updated_at: "2012-03-27 12:40:59")
     create(:item, unit_price: 33.27, name: "Mid Mod Desk" )
     create(:item, unit_price: 3.50, name: "Rustic Desk" )
-    create(:item, updated_at: "2012-03-27 14:53:59", name: "Desklite 2" )
+    @item2 = create(:item, updated_at: "2012-03-27 14:53:59", name: "Desklite 2" )
 
     # Robin Dean Designs
     create(:merchant)
@@ -43,7 +43,7 @@ RSpec.describe "Single Finders", type: :request do
       item = JSON.parse(response.body, symbolize_names: true)
 
       expect(item.count).to eq(1)
-      expect(item[:data][:attributes][:updated_at]).to include("2012-03-27")
+      expect(item[:data][:id].to_i).to eq(@item1.id)
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe "Single Finders", type: :request do
 
       expect(items[:data].count).to eq(2)
       items[:data].each do |item|
-        expect(item[:attributes][:updated_at].to_s).to include('2012-03-27')
+        expect(item[:id].to_i == @item1.id || item[:id].to_i == @item2.id).to eq(true)
       end
     end
   end

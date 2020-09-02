@@ -2,7 +2,7 @@ class Api::V1::Merchants::SearchController < ApplicationController
   def index
     attribute = merchant_params.keys.first
     search_value = merchant_params[attribute].downcase
-    render json: MerchantSerializer.new(Merchant.find_one(attribute, search_value))
+    render json: MerchantSerializer.new(Merchant.find_all(attribute, search_value))
   end
 
   def show
