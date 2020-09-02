@@ -2,16 +2,13 @@ class Api::V1::Merchants::SearchController < ApplicationController
   def index
     attribute = merchant_params.keys.first
     search_value = merchant_params[attribute].downcase
-    merchants = Merchant.where("merchants.#{attribute} ILIKE ?", "%#{search_value}%")
-    render json: MerchantSerializer.new(merchants)
+    render json: MerchantSerializer.new(Merchant.find_one(attribute, search_value))
   end
 
   def show
-    # refactor this to merchant model at some point, using scope?
     attribute = merchant_params.keys.first
     search_value = merchant_params[attribute].downcase
-    merchants = Merchant.where("merchants.#{attribute} ILIKE ?", "%#{search_value}%")
-    render json: MerchantSerializer.new(merchants.first)
+    render json: MerchantSerializer.new(Merchant.find_one(attribute, search_value))
   end
 
   private
