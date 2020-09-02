@@ -35,18 +35,17 @@ RSpec.describe "Single Finders", type: :request do
       get "/api/v1/items/find_all?name=desk"
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items.count).to eq(3)
-      items.each do |item|
-        expect(item[:data][:attributes][:name].downcase).to include('desk')
+      expect(items[:data].count).to eq(3)
+      items[:data].each do |item|
+        expect(item[:attributes][:name].downcase).to include('desk')
       end
 
       get "/api/v1/items/find_all?name=dEsk"
 
       items = JSON.parse(response.body, symbolize_names: true)
-
-      expect(items.count).to eq(3)
-      items.each do |item|
-        expect(item[:data][:attributes][:name].downcase).to include('desk'.downcase)
+      expect(items[:data].count).to eq(3)
+      items[:data].each do |item|
+        expect(item[:attributes][:name].downcase).to include('desk'.downcase)
       end
     end
   end
