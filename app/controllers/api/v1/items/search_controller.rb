@@ -2,16 +2,13 @@ class Api::V1::Items::SearchController < ApplicationController
   def index
     attribute = item_params.keys.first
     search_value = item_params[attribute].downcase
-    items = Item.where("items.#{attribute} ILIKE ?", "%#{search_value}%")
-    render json: ItemSerializer.new(items)
+    render json: ItemSerializer.new(Item.find_all(attribute, search_value))
   end
 
   def show
-    # refactor this to item model at some point, using scope?
     attribute = item_params.keys.first
     search_value = item_params[attribute].downcase
-    items = Item.where("items.#{attribute} ILIKE ?", "%#{search_value}%")
-    render json: ItemSerializer.new(items.first)
+    render json: ItemSerializer.new(Item.find_one(attribute, search_value))
   end
 
   private
