@@ -11,10 +11,12 @@ class Item < ApplicationRecord
   }
 
   def self.find_one(attribute, value)
-    find_by_attribute(attribute, value).first
+    find_by_attribute(attribute, value).first unless attribute == :date
+    # find by date 
   end
 
   def self.find_all(attribute, value)
-    find_by_attribute(attribute, value)
+    find_by_attribute(attribute, value) unless attribute == :date
+    # find by date
   end
 end
