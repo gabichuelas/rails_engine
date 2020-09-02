@@ -24,8 +24,7 @@ RSpec.describe Item do
       search_value = "desk"
 
       item = Item.find_one(attribute, search_value)
-      expect(item.count).to eq(1)
-      expect(item[:data][:attributes][:name].downcase).to include('desk')
+      expect(item.name.downcase).to include('desk')
     end
   end
 end

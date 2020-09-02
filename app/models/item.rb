@@ -6,5 +6,7 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :payments, through: :invoices
 
-  
+  def self.find_one(attribute, value)
+    Item.where("items.#{attribute} ILIKE ?", "%#{value}%").first
+  end
 end
