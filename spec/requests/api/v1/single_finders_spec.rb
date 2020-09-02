@@ -49,4 +49,26 @@ RSpec.describe "Single Finders", type: :request do
       end
     end
   end
+
+  describe 'Find Merchant: returns single record that matches given criteria' do
+    it 'can Find for name attribute' do
+      get "/api/v1/merchants/find?name=sIgnS"
+      merchant = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchant.count).to eq(1)
+      expect(merchant[:data][:attributes][:name].downcase).to include('sIgnS'.downcase)
+    end
+  end
+
+  describe 'Find All Merchants: returns all records that matches given criteria' do
+    xit 'can Find_all for name attribute' do
+      get "/api/v1/merchants/find_all?name=siGn"
+      merchants = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchants[:data].count).to eq(3)
+      merchants[:data].each do |item|
+        expect(merchant[:attributes][:name].downcase).to include('siGn'.downcase)
+      end
+    end
+  end
 end
