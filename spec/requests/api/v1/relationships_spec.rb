@@ -1,7 +1,8 @@
 RSpec.describe "Api::V1 Item/Merchant relationships", type: :request do
   before :each do
     @merchant = create(:merchant)
-    3.times { create(:item, merchant: @merchant) }
+    2.times { create(:item, merchant: @merchant) }
+    @item = create(:item, merchant: @merchant)
     @headers = { "CONTENT_TYPE" => "application/json" }
   end
 
@@ -22,8 +23,14 @@ RSpec.describe "Api::V1 Item/Merchant relationships", type: :request do
   end
 
   describe 'GET /api/v1/items/:id/merchant' do
-    xit 'returns the merchant associated with an item' do
+    it 'returns the merchant associated with an item' do
 
+      get "/api/v1/items/#{@item.id}/merchant"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(json[:data].count).to eq(1)
+      expect(json[:data][:id]).to eq(@merchant.id)
     end
   end
 end
