@@ -9,12 +9,4 @@ class Item < ApplicationRecord
   scope :find_by_attribute, -> (attribute, value) {
     where("items.#{attribute}::text ILIKE ?", "%#{value}%")
   }
-  #
-  # def self.find_one(attribute, value)
-  #   find_by_attribute(attribute, value).first
-  # end
-  #
-  # def self.find_all(attribute, value)
-  #   find_by_attribute(attribute, value)
-  # end
 end
