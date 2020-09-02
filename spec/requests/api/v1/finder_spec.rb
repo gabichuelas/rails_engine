@@ -56,6 +56,16 @@ RSpec.describe "Single Finders", type: :request do
         expect(item[:attributes][:name].downcase).to include('desk'.downcase)
       end
     end
+
+    it 'can Find_all for unit_price (integer) attribute' do
+      get "/api/v1/items/find_all?unit_price=3"
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(items[:data].count).to eq(2)
+      items[:data].each do |item|
+        expect(item[:attributes][:unit_price].to_s).to include('3')
+      end
+    end
   end
 
   describe 'Find Merchant: returns single record that matches given criteria' do
