@@ -10,13 +10,22 @@ RSpec.describe Item do
     it { should belong_to :merchant }
   end
 
-  # describe 'before_create methods' do
-  #   it 'to_dollars' do
-  #
-  #     item = create(:item)
-  #     item.update(unit_price: 75107)
-  #
-  #     expect(item.unit_price).to eq(751.07)
-  #   end
-  # end
+  describe 'class methods' do
+    before :each do
+      # "Whimsical Nightstand"
+      create(:item)
+      create(:item, name: "Mid Mod Desk" )
+      create(:item, name: "Rustic Desk" )
+      create(:item, name: "Desklite 2" )
+    end
+
+    it '::find' do
+      attribute = "name"
+      search_value = "desk"
+
+      item = Item.find(attribute, search_value)
+      expect(item.count).to eq(1)
+      expect(item[:data][:attributes][:name].downcase).to include('desk')
+    end
+  end
 end
