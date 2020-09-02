@@ -4,11 +4,9 @@ class Item < ApplicationRecord
 
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
+  has_many :payments, through: :invoices
 
-  # before_save :to_dollars
-
-  # private
-  #   def to_dollars
-  #     self.unit_price = self.unit_price.fdiv(100)
-  #   end
+  scope :find_by_attribute, -> (attribute, value) {
+    where("items.#{attribute}::text ILIKE ?", "%#{value}%")
+  }
 end

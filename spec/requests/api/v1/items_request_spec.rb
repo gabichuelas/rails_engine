@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Items", type: :request do
 
   it 'GET /api/v1/items' do
 
-    get api_v1_items_path
+    get "/api/v1/items"
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(:success)
@@ -21,7 +21,7 @@ RSpec.describe "Api::V1::Items", type: :request do
 
   it 'GET /api/v1/items/:id' do
 
-    get api_v1_item_path(@item.id)
+    get "/api/v1/items/#{@item.id}"
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(:success)
@@ -66,7 +66,7 @@ RSpec.describe "Api::V1::Items", type: :request do
 
     merchant_id = create(:merchant).id
     attributes = JSON.generate({name: "Mid Mod Desk", description: "This wooden desk has butterflies and copper inserts.", unit_price: 1500.50, merchant_id: merchant_id})
-    post api_v1_items_path, params: attributes, headers: @headers
+    post "/api/v1/items", params: attributes, headers: @headers
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(201)
