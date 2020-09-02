@@ -29,8 +29,9 @@ RSpec.describe "Api::V1 Item/Merchant relationships", type: :request do
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:success)
-      expect(json[:data].count).to eq(1)
-      expect(json[:data][:id]).to eq(@merchant.id)
+      expect(json[:data][:id].to_i).to eq(@merchant.id)
+      expect(json[:data][:type]).to eq("merchant")
+      expect(json[:data][:attributes][:name]).to eq("Robin Dean Designs")
     end
   end
 end
