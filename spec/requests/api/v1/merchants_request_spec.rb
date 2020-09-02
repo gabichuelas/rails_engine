@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Merchants", type: :request do
 
   it 'GET /api/v1/<resource>' do
 
-    get api_v1_merchants_path
+    get "/api/v1/merchants"
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(:success)
@@ -57,7 +57,7 @@ RSpec.describe "Api::V1::Merchants", type: :request do
   it 'CREATE /api/v1/<resource>' do
 
     attributes = JSON.generate({name: "University Cobbler"})
-    post api_v1_merchants_path, params: attributes, headers: @headers
+    post "/api/v1/merchants", params: attributes, headers: @headers
     json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status(201)

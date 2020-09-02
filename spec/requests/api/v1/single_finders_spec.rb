@@ -20,7 +20,7 @@ RSpec.describe "Single Finders", type: :request do
     item = JSON.parse(response.body, symbolize_names: true)
 
     expect(item.count).to eq(1)
-    expect(item[:data][:attributes][:name]).to include('desk')
+    expect(item[:data][:attributes][:name].downcase).to include('desk')
   end
 
   xit 'Find All Items: returns all records that matches given criteria' do
