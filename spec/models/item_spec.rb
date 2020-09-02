@@ -19,11 +19,11 @@ RSpec.describe Item do
       create(:item, name: "Desklite 2" )
     end
 
-    it '::find' do
+    it '::find_one' do
       attribute = "name"
       search_value = "desk"
 
-      item = Item.find(attribute, search_value)
+      item = Item.find_one(attribute, search_value)
       expect(item.count).to eq(1)
       expect(item[:data][:attributes][:name].downcase).to include('desk')
     end
