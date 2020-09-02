@@ -11,13 +11,13 @@ RSpec.describe InvoiceItem do
     it { should belong_to :invoice }
   end
 
-  describe 'before_create methods' do
-    it 'to_dollars' do
-
-      invoice_item = create(:invoice_item)
-      invoice_item.update(unit_price: 75107)
-
-      expect(invoice_item.unit_price).to eq(751.07)
-    end
-  end
+  # describe 'before_create methods' do
+  #   it 'to_dollars' do
+  #
+  #     invoice_item = create(:invoice_item)
+  #     invoice_item.update(unit_price: 75107)
+  #
+  #     expect(invoice_item.unit_price).to eq(751.07)
+  #   end
+  # end
 end

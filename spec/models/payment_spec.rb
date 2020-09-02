@@ -10,13 +10,4 @@ RSpec.describe Payment, type: :model do
     it { should belong_to :invoice }
   end
 
-  describe 'before_create methods' do
-    it 'to_dollars' do
-
-      item = create(:item)
-      item.update(unit_price: 75107)
-
-      expect(item.unit_price).to eq(751.07)
-    end
-  end
 end
