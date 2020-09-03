@@ -10,4 +10,8 @@ class Merchant < ApplicationRecord
   scope :find_by_attribute, -> (attribute, value) {
     where("merchants.#{attribute}::text ILIKE ?", "%#{value}%")
   }
+
+  scope :rank_by_items_sold, -> (result_length) {
+    joins(:invoice_items).joins(:payments).where("payments.result = 'success'").group(:id).order('sum(invoice_items.quantity) desc').limit(result_length)
+  }
 end
