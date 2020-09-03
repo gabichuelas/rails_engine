@@ -43,7 +43,7 @@ RSpec.describe 'Business Intelligence Endpoints' do
     get '/api/v1/revenue?start=2012-03-09&end=2012-03-24'
     revenue = JSON.parse(response.body, symbolize_names: true)
 
-    expect(merchant[:data][:attributes][:revenue]).to eq(17511.25)
+    expect(revenue[:data][:attributes][:revenue]).to eq(17511.25)
   end
 
   it 'can get merchants with the most revenue' do

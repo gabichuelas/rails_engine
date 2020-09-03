@@ -23,4 +23,9 @@ class Merchant < ApplicationRecord
     total = invoice_items.joins(:payments, :invoice).where("payments.result = 'success'").sum("quantity * unit_price")
     Revenue.new(total)
   end
+
+  def self.revenue_for_range(start_date, end_date)
+    total = Invoice.joins(:invoice_items).where(updated_at: Date.parse(start_date).beginning_of_day..Date.parse(end_date).end_of_day).sum("invoice_items.quantity * invoice_items.unit_price")
+    Revenue.new(total)
+  end
 end
