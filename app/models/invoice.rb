@@ -9,4 +9,9 @@ class Invoice < ApplicationRecord
   has_many :payments, dependent: :destroy
   has_many :invoice_items
   has_many :items, through: :invoice_items
+
+  scope :revenue_for_range, -> (start_date, end_date) {
+    total = joins(:invoice_items).where(updated_at: Date.parse(start_date).beginning_of_day..Date.parse(end_date).end_of_day).sum("invoice_items.quantity * invoice_items.unit_price")
+    Revenue.new(total)
+  }
 end
