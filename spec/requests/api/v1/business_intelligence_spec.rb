@@ -35,7 +35,7 @@ RSpec.describe 'Business Intelligence Endpoints' do
     get "/api/v1/merchants/#{@merchantB.id}/revenue"
     merchant = JSON.parse(response.body, symbolize_names: true)
 
-    expect(merchant[:data][:attributes][:revenue]).to eq(1400.90)
+    expect(merchant[:data][:attributes][:revenue]).to eq(7004.50)
   end
 
   it 'can get revenue across date range' do
