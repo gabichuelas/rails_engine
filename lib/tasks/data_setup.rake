@@ -23,7 +23,7 @@ namespace :data_setup do
       CSV.foreach(Rails.root.join("db/data/#{filename}"), headers: true) do |row|
         object = model.create!(row.to_h)
         if object.unit_price
-          object.unit_price = object.unit_price.fdiv(100)
+          object.unit_price = object.unit_price.fdiv(100).round(2)
           object.save
         else
         end

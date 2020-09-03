@@ -4,7 +4,7 @@ class Item < ApplicationRecord
 
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
-  has_many :payments, through: :invoices
+  # has_many :payments, through: :invoices
 
   scope :find_by_attribute, -> (attribute, value) {
     where("items.#{attribute}::text ILIKE ?", "%#{value}%")

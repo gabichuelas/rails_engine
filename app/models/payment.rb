@@ -5,4 +5,6 @@ class Payment < ApplicationRecord
   validates_presence_of :result
 
   belongs_to :invoice
+
+  scope :success, -> { where(result: "success") }
 end

@@ -9,7 +9,7 @@ FactoryBot.define do
     merchant
     name { "Whimsical Nightstand" }
     description { "Gorgeous piece of fine woodwork." }
-    unit_price { 70045 }
+    unit_price { 700.45 }
   end
 end
 
@@ -33,7 +33,7 @@ FactoryBot.define do
     item
     invoice
     quantity { 5 }
-    unit_price { 70045}
+    unit_price { 700.45}
   end
 end
 
