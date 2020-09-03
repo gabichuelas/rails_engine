@@ -12,6 +12,6 @@ class Merchant < ApplicationRecord
   }
 
   scope :rank_by_items_sold, -> (result_length) {
-    joins(:invoice_items).joins(:payments).where("payments.result = 'success'").group(:id).order('sum(invoice_items.quantity) desc').limit(result_length)
+    joins(invoices: [:invoice_items, :payments]).where("payments.result = 'success'").group(:id).order('sum(invoice_items.quantity) desc').limit(result_length)
   }
 end
