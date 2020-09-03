@@ -20,6 +20,7 @@ class Merchant < ApplicationRecord
   }
 
   def total_revenue
-    invoice_items.joins(:payments, :invoice).where("payments.result = 'success'").sum("quantity * unit_price")
+    total = invoice_items.joins(:payments, :invoice).where("payments.result = 'success'").sum("quantity * unit_price")
+    Revenue.new(total)
   end
 end
