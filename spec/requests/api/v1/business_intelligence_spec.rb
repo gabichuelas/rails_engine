@@ -5,9 +5,9 @@ RSpec.describe 'Business Intelligence Endpoints' do
     @merchantB = create(:merchant, name: "Merchant B")
     merchantC = create(:merchant, name: "Merchant C")
 
-    invoiceA = create(:invoice, merchant: merchantA)
-    invoiceB = create(:invoice, merchant: @merchantB)
-    invoiceC = create(:invoice, merchant: merchantC)
+    invoiceA = create(:invoice, merchant: merchantA, updated_at: '2012-03-12')
+    invoiceB = create(:invoice, merchant: @merchantB, updated_at: '2012-03-20')
+    invoiceC = create(:invoice, merchant: merchantC, updated_at: '2012-03-26')
 
     create(:payment, invoice: invoiceA)
     create(:payment, invoice: invoiceB)
@@ -41,11 +41,18 @@ RSpec.describe 'Business Intelligence Endpoints' do
   it 'can get revenue across date range' do
     # GET /api/v1/revenue?start=<start_date>&end=<end_date>
     get '/api/v1/revenue?start=2012-03-09&end=2012-03-24'
+    revenue = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][:attributes][:revenue]).to eq(17511.25)
   end
 
   it 'can get merchants with the most revenue' do
     # GET /api/v1/merchants/most_revenue?quantity=x
-    # AR query done, need test.
+    get '/api/v1/merchants/most_revenue?quantity=2'
+    merchants = JSON.parse(response.body, symbolize_names: true)
 
+    expect(merchants[:data].count).to eq(2)
+    expect(merchants[:data][0][:attributes][:name]).to eq("Merchant A")
+    expect(merchants[:data][1][:attributes][:name]).to eq("Merchant B")
   end
 end
