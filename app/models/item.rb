@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   belongs_to :merchant
 
   has_many :invoice_items, dependent: :destroy
-  has_many :invoices, through: :invoice_items
+  has_many :invoices, through: :invoice_items, dependent: :destroy
   # has_many :payments, through: :invoices
 
   scope :find_by_attribute, -> (attribute, value) {
