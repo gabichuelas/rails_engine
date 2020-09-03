@@ -15,4 +15,4 @@ An api built in rails meant to practice building out api CRUD functionality and 
 4. Run local test suite with `bundle exec rspec`
 
 ### Database Schema
-![Schema](https://imgur.com/kYKisBQ)
+![Schema](https://user-images.githubusercontent.com/62727545/92139208-6964f200-eddd-11ea-9c04-a3b85f0cdcf7.png)
